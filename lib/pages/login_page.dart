@@ -45,7 +45,9 @@ class _LoginPageState extends State<LoginPage> {
           
                 CustomTextField(
                   controller: emailController, 
-                  hintText: 'Почта', 
+                  hintText: 'Введите почту', 
+                  labelText: 'Почта',
+                  prefixIcon: Icon(Icons.email, color: Colors.grey.shade700,),
                   obscureText: false, 
                 ),
 
@@ -53,7 +55,9 @@ class _LoginPageState extends State<LoginPage> {
 
                 CustomTextField(
                   controller: passwordController, 
-                  hintText: 'Пароль', 
+                  hintText: 'Введите пароль',
+                  labelText: 'Пароль',
+                  prefixIcon: Icon(Icons.key, color: Colors.grey.shade700), 
                   obscureText: true, 
                 ),
 
