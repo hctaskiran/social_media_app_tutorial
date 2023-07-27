@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/button.dart';
@@ -12,6 +13,44 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPagePageState extends State<RegisterPage> {
+
+  void signUp() async {
+    // loading circle
+    showDialog(
+      context: context, 
+      builder:(context) => const Center(child: CircularProgressIndicator()));
+
+      // password match
+      if (passwordController.text != confirmPasswordController.text) {
+        // pop loading
+        Navigator.pop(context);
+        // error
+        displayMessage('Паролы не совпадаются');
+        return;
+      }
+
+      // try creating user
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text, 
+          password: passwordController.text
+        
+        );
+        // pop loading
+        if (context.mounted) Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        // pop loading
+        Navigator.pop(context);
+        // show error to user
+        displayMessage(e.code);
+      }
+
+  }
+    void displayMessage(String message) {
+      showDialog(context: context, builder:(context) => AlertDialog(
+        title: Text(message),
+      ));
+    }
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -61,7 +100,7 @@ class _RegisterPagePageState extends State<RegisterPage> {
 
                 const SizedBox(height: 10),
 
-                CustomButton(onTap: widget.onTap, text: 'Создать'),
+                CustomButton(onTap: signUp, text: 'Создать'),
 
                 const SizedBox(height: 25),
 
