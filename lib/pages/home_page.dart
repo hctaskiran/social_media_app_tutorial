@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app_tutorial/components/drawer.dart';
 import 'package:social_media_app_tutorial/components/textfield.dart';
 import 'package:social_media_app_tutorial/components/wall_post.dart';
+import 'package:social_media_app_tutorial/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -40,19 +42,30 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // navigate to profile
+  void goProfilePage() {
+    // pop menu drawer
+    Navigator.pop(context);
+
+    // go to profile page
+    Navigator.push(context, 
+    MaterialPageRoute(
+      builder:(context) => ProfilePage()
+    )
+   );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: customColors().grey300color,
       appBar: AppBar(
         title: Text('Ducky'), 
-        backgroundColor: customColors().grey900color,
-        actions: [
-          IconButton(
-            onPressed: signOut, 
-            icon: customIcons().logoutIcon
-          ),
-        ]
+        backgroundColor: customColors().grey900color,        
+      ),
+      drawer: CustomDrawer(
+        onProfileTap: goProfilePage, 
+        onSignOutTap: signOut,
       ),
       body: Center(
         child: Column(

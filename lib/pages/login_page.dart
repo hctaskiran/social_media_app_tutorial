@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: customColors().grey300color,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -117,6 +117,7 @@ class _LoginPageState extends State<LoginPage> {
 class customColors {
   final blueColor = Colors.blue;
   final grey700color=  Colors.grey.shade700;
+  final grey300color = Colors.grey.shade300;
 }
 
 class customSizedBoxes {
