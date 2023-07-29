@@ -29,7 +29,8 @@ class _HomePageState extends State<HomePage> {
       FirebaseFirestore.instance.collection('User Posts').add({
         'UserEmail': currentUser.email,
         'Message': textController.text,
-        'TimeStamp': Timestamp.now()
+        'TimeStamp': Timestamp.now(),
+        'Likes': [],
       });
     }
 
@@ -70,7 +71,13 @@ class _HomePageState extends State<HomePage> {
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder:(context, index) {
                       final post = snapshot.data!.docs[index];   
-                      return WallPost(message: post['Message'], user: post['UserEmail']);
+                      return WallPost(
+                        message: post['Message'], 
+                        user: post['UserEmail'],
+                        likes: List<String>.from(post['Likes'] ?? []), 
+                        postID: post.id,
+
+                      );
                     }
                    );
                   } else if (snapshot.hasError){
