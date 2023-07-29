@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -31,11 +32,23 @@ class _RegisterPagePageState extends State<RegisterPage> {
 
       // try creating user
       try {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+
+        // create the user
+        UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text, 
           password: passwordController.text
-        
         );
+        // after user has been created, create a new doc in cloud called Users
+        FirebaseFirestore.instance
+        .collection('Users')
+        .doc(userCredential.user!.email)
+        .set({
+          'username' :emailController.text.split('@')[0], // init username
+          'bio' : 'empty bio' // init empty bio
+          // add more if needed
+        });
+
+
         // pop loading
         if (context.mounted) Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
@@ -113,6 +126,7 @@ class _RegisterPagePageState extends State<RegisterPage> {
                       onTap: widget.onTap,
                       child: Text('Нажмите для входа!', 
                       style: TextStyle(
+                        decoration: TextDecoration.underline,
                         color: Colors.blue, 
                         fontWeight: FontWeight.bold),),
                     )

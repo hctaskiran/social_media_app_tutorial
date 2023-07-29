@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app_tutorial/components/text_box.dart';
@@ -13,6 +14,54 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // user
   final currentUser = FirebaseAuth.instance.currentUser!;
+  // all users
+  final usersCollection = FirebaseFirestore.instance.collection('Users');
+
+  Future<void> editField (String field) async {
+    String newValue = '';
+    await showDialog(
+      context: context, 
+      builder: (context) => AlertDialog(
+        backgroundColor: customColors().grey900color,
+        title: Text('Редактировать $field',
+        style: TextStyle(
+          color: customColors().whiteColor
+        ),
+       ),
+       content: TextField(
+        autofocus: true,
+        style: TextStyle(
+          color: customColors().whiteColor,
+        ),
+        decoration: InputDecoration(
+            hintText: 'Введите новый $field',
+            hintStyle: TextStyle(color: Colors.blue)
+        ),
+        onChanged:(value) {
+          newValue = value;
+        },
+       ),
+       actions: [
+        // cansel
+        TextButton(
+          child: Text('Отменить', style: TextStyle(color: customColors().whiteColor)),
+          onPressed:() => Navigator.pop(context),
+          ),
+        // save
+        TextButton(
+          child: Text('Сохранить', style: TextStyle(color: customColors().whiteColor)),
+          onPressed:() => Navigator.of(context).pop(newValue),
+          ),
+       ],
+      ),
+    );
+
+    // update in firebase
+    if (newValue.trim().length > 0) {
+      // update only if there is sth in tf
+      await usersCollection.doc(currentUser.email).update({field: newValue});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +71,13 @@ class _ProfilePageState extends State<ProfilePage> {
         title: Text('Профиль'), 
         backgroundColor: customColors().grey900color
       ),
-      body: ListView(
+      body: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance.collection('Users').doc(currentUser.email).snapshots(),
+        builder: (context, snapshot) {
+          // get user data
+          if (snapshot.hasData) {
+            final userData = snapshot.data!.data() as Map<String, dynamic>;
+            return ListView(
         children: [
           const SizedBox(height: 50),
           // pp
@@ -50,13 +105,37 @@ class _ProfilePageState extends State<ProfilePage> {
           // details
 
           // nick
-          CustomTextBox(text: 'hctaskiran', sectionName: 'ПРОЗВИЩЕ:')
+          CustomTextBox(
+            text: userData['username'], 
+            sectionName: 'ПРОЗВИЩЕ:',
+            onPressed: () => editField('username'),
+            ),
 
            // bio
+          CustomTextBox(
+            text: userData['bio'], 
+            sectionName: 'О Себе:',
+            onPressed: () => editField('bio'),
+            ),
+
+            const SizedBox(height: 50),
 
            // posts
+          Padding(
+            padding: const EdgeInsets.only(left: 25),
+            child: Text(
+              'Публикация Этого Пользователья',
+              style: TextStyle(color: customColors().grey700color),
+              ),
+          ),
         ],
-      ),
+      );
+          } else if (snapshot.hasError){
+            return Center(child: Text('Ошибка${snapshot.error}'));
+          }
+
+          return const Center(child: CircularProgressIndicator());
+      })
     );
   }
 }
@@ -65,4 +144,5 @@ class customColors {
   final grey900color = Colors.grey.shade900;
   final grey300color = Colors.grey.shade300;
   final grey700color = Colors.grey.shade700;
+  final whiteColor = Colors.white;
 }

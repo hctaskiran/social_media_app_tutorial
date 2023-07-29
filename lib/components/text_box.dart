@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class CustomTextBox extends StatelessWidget {
   final String text;
   final String sectionName;
-  const CustomTextBox({super.key, required this.text, required this.sectionName});
+  final void Function()? onPressed;
+  const CustomTextBox({super.key, required this.text, required this.sectionName, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +23,15 @@ class CustomTextBox extends StatelessWidget {
             children: [
               Text(sectionName, 
               style: TextStyle(
+                color: customColors().grey600color,
                 fontWeight: FontWeight.bold,
-                
+                decoration: TextDecoration.underline
                ),
               ),
 
               // edit button
               IconButton(
-                onPressed: (){}, 
+                onPressed: onPressed, 
                 icon: Icon(
                   Icons.settings, 
                   color: customColors().grey500color,
@@ -48,4 +50,5 @@ class CustomTextBox extends StatelessWidget {
 class customColors {
   final grey200color = Colors.grey.shade200;
   final grey500color = Colors.grey.shade500;
+  final grey600color = Colors.grey.shade600;
 }
