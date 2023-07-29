@@ -42,14 +42,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: customColors().grey300color,
       appBar: AppBar(
         title: Text('Ducky'), 
-        backgroundColor: Colors.grey.shade900,
+        backgroundColor: customColors().grey900color,
         actions: [
           IconButton(
             onPressed: signOut, 
-            icon: Icon(Icons.logout)
+            icon: customIcons().logoutIcon
           ),
         ]
       ),
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                       CustomTextField(
                         controller: 
                         textController, 
-                        hintText: 'Публикация', 
+                        hintText: customTexts().publishMsg, 
                         obscureText: false
                     ),
                   ),
@@ -106,8 +106,10 @@ class _HomePageState extends State<HomePage> {
 
 
             // logged in as
-            Text(customMessages().loggedMsg + currentUser.email!, style: TextStyle(color:customColors().grey500color)),
-            const SizedBox(height: 50)
+            Text(
+            customTexts().loggedMsg + currentUser.email!, 
+            style: TextStyle(color:customColors().grey500color)),
+            customSizedBoxes().elliHeBox
           ],
         ),
       ),
@@ -115,10 +117,21 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class customMessages {
+class customTexts {
   final String loggedMsg = 'Вошли как: ';
+  final String publishMsg = 'Публикация';
+}
+
+class customIcons {
+  final logoutIcon = Icon(Icons.logout);
 }
 
 class customColors {
   final grey500color = Colors.grey.shade500;
+  final grey900color = Colors.grey.shade900;
+  final grey300color = Colors.grey.shade300;
+}
+
+class customSizedBoxes {
+  final elliHeBox = SizedBox(height: 50);
 }

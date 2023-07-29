@@ -71,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   controller: emailController, 
                   hintText: 'Введите почту', 
                   labelText: 'Почта',
-                  prefixIcon: Icon(Icons.email, color: Colors.grey.shade700,),
+                  prefixIcon: Icon(Icons.email, color: customColors().grey700color),
                   obscureText: false, 
                 ),
 
@@ -81,15 +81,15 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordController, 
                   hintText: 'Введите пароль',
                   labelText: 'Пароль',
-                  prefixIcon: Icon(Icons.key, color: Colors.grey.shade700), 
+                  prefixIcon: Icon(Icons.key, color: customColors().grey700color), 
                   obscureText: true, 
                 ),
 
-                const SizedBox(height: 10),
+                customSizedBoxes().onluSized,
 
                 CustomButton(onTap: signIn, text: 'Вход'),
 
-                const SizedBox(height: 25),
+                customSizedBoxes().yirmibesSized,
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -100,13 +100,11 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: widget.onTap,
                       child: Text('Зарегистрируйтесь!', 
                       style: TextStyle(
-                        color: Colors.blue, 
+                        color: customColors().blueColor,
                         fontWeight: FontWeight.bold),),
                     )
                   ],
-                )
-                
-                
+                ),
               ],
             ),
           ),
@@ -114,4 +112,14 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+}
+
+class customColors {
+  final blueColor = Colors.blue;
+  final grey700color=  Colors.grey.shade700;
+}
+
+class customSizedBoxes {
+  final yirmibesSized = SizedBox(height: 25);
+  final onluSized = SizedBox(height: 10);
 }
