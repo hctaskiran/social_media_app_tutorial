@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:social_media_app_tutorial/components/custom_password_field.dart';
 
 import '../components/button.dart';
 import '../components/textfield.dart';
@@ -107,19 +108,11 @@ class _RegisterPagePageState extends State<RegisterPage> {
 
                 const SizedBox(height: 10),
 
-                CustomTextField(
-                  controller: passwordController, 
-                  hintText: 'Enter a password', 
-                  obscureText: true, 
-                ),
+                CustomTextField(controller: passwordController, hintText: 'Enter a password', obscureText: _isVisible),
 
                 const SizedBox(height: 10),
 
-                CustomTextField(
-                  controller: confirmPasswordController, 
-                  hintText: 'Confirm the password', 
-                  obscureText: true, 
-                ),
+                PasswordTextField(controller: confirmPasswordController, text: 'Confirm the password', ),
 
                 const SizedBox(height: 10),
 

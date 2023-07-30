@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app_tutorial/components/button.dart';
+import 'package:social_media_app_tutorial/components/custom_password_field.dart';
 import 'package:social_media_app_tutorial/components/textfield.dart';
 
 class LoginPage extends StatefulWidget {
@@ -110,13 +111,18 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 10),
 
-                CustomTextField(
+                PasswordTextField(
                   controller: passwordController, 
-                  hintText: 'Enter the password',
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.key, color: customColors().grey700color), 
-                  obscureText: true, 
-                ),
+                  text: 'Enter the password', 
+                  prefixIcon: Icon(Icons.key, color: Colors.grey.shade700)),
+
+                // CustomTextField(
+                //   controller: passwordController, 
+                //   hintText: 'Enter the password',
+                //   labelText: 'Password',
+                //   prefixIcon: Icon(Icons.key, color: customColors().grey700color), 
+                //   obscureText: true, 
+                // ),
 
                 customSizedBoxes().onluSized,
 
