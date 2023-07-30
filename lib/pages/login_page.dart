@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       context: context, 
       builder: (context) {
         return const AlertDialog(
-          title: Text('Неверная Почта'),
+          title: Text('Wrong e-mail, try again'),
         );
       }  
     );
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
       context: context, 
       builder: (context) {
         return const AlertDialog(
-          title: Text('Неверный Пароль'),
+          title: Text('Wrong password, try again'),
         );
       }  
     );
@@ -94,16 +94,16 @@ class _LoginPageState extends State<LoginPage> {
           
                 Icon(Icons.lock, size: 100),
           
-                const SizedBox(height: 50),        
+                const SizedBox(height: 30),        
           
-                Text('Добро пожаловать снова!'),
+                Text('Welcome back again!', style: TextStyle(fontSize: 18),),
           
                 const SizedBox(height: 25),
           
                 CustomTextField(
                   controller: emailController, 
-                  hintText: 'Введите почту', 
-                  labelText: 'Почта',
+                  hintText: 'Enter the e-mail', 
+                  labelText: 'E-Mail',
                   prefixIcon: Icon(Icons.email, color: customColors().grey700color),
                   obscureText: false, 
                 ),
@@ -112,26 +112,26 @@ class _LoginPageState extends State<LoginPage> {
 
                 CustomTextField(
                   controller: passwordController, 
-                  hintText: 'Введите пароль',
-                  labelText: 'Пароль',
+                  hintText: 'Enter the password',
+                  labelText: 'Password',
                   prefixIcon: Icon(Icons.key, color: customColors().grey700color), 
                   obscureText: true, 
                 ),
 
                 customSizedBoxes().onluSized,
 
-                CustomButton(onTap: signIn, text: 'Вход'),
+                CustomButton(onTap: signIn, text: 'Sign In'),
 
                 customSizedBoxes().yirmibesSized,
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('У вас аккаунта нет?'),
+                    Text('Haven\'t created an account yet?'),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: Text('Зарегистрируйтесь!', 
+                      child: Text('Create now!', 
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                         color: customColors().blueColor,

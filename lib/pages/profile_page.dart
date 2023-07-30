@@ -23,7 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
       context: context, 
       builder: (context) => AlertDialog(
         backgroundColor: customColors().grey900color,
-        title: Text('Редактировать $field',
+        title: Text('Edit $field',
         style: TextStyle(
           color: customColors().whiteColor
         ),
@@ -34,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
           color: customColors().whiteColor,
         ),
         decoration: InputDecoration(
-            hintText: 'Введите новый $field',
+            hintText: 'Enter a new $field',
             hintStyle: TextStyle(color: customColors().whiteColor)
         ),
         onChanged:(value) {
@@ -44,12 +44,12 @@ class _ProfilePageState extends State<ProfilePage> {
        actions: [
         // cansel
         TextButton(
-          child: Text('Отменить', style: TextStyle(color: customColors().whiteColor)),
+          child: Text('Cancel', style: TextStyle(color: customColors().whiteColor)),
           onPressed:() => Navigator.pop(context),
           ),
         // save
         TextButton(
-          child: Text('Сохранить', style: TextStyle(color: customColors().whiteColor)),
+          child: Text('Save', style: TextStyle(color: customColors().whiteColor)),
           onPressed:() => Navigator.of(context).pop(newValue),
           ),
        ],
@@ -68,7 +68,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: customColors().grey300color,
       appBar: AppBar(
-        title: Text('Профиль'), 
+        title: Text('Profile'), 
         backgroundColor: customColors().grey900color
       ),
       body: StreamBuilder<DocumentSnapshot>(
@@ -97,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Padding(
             padding: const EdgeInsets.only(left: 25),
             child: Text(
-              'Подробно о Ползователе',
+              'User Details',
               style: TextStyle(color: customColors().grey700color),
               ),
           ),
@@ -107,14 +107,14 @@ class _ProfilePageState extends State<ProfilePage> {
           // nick
           CustomTextBox(
             text: userData['username'], 
-            sectionName: 'ПРОЗВИЩЕ:',
+            sectionName: 'Nickname:',
             onPressed: () => editField('username'),
             ),
 
            // bio
           CustomTextBox(
             text: userData['bio'], 
-            sectionName: 'О Себе:',
+            sectionName: 'About User:',
             onPressed: () => editField('bio'),
             ),
 
@@ -124,14 +124,14 @@ class _ProfilePageState extends State<ProfilePage> {
           Padding(
             padding: const EdgeInsets.only(left: 25),
             child: Text(
-              'Публикация Этого Пользователья',
+              'Posts of the User',
               style: TextStyle(color: customColors().grey700color),
               ),
           ),
         ],
       );
           } else if (snapshot.hasError){
-            return Center(child: Text('Ошибка${snapshot.error}'));
+            return Center(child: Text('Error:${snapshot.error}'));
           }
 
           return const Center(child: CircularProgressIndicator());

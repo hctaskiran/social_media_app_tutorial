@@ -29,14 +29,14 @@ class CustomDrawer extends StatelessWidget {
          
          CustomListTile(
           icon: Icons.home, 
-          text: 'Главная',
+          text: 'HOME',
           onTap: () => Navigator.pop(context),
           ),
 
           // profile listtile
           CustomListTile(
             icon: Icons.person, 
-            text: 'Профиль', 
+            text: 'PROFILE', 
             onTap: onProfileTap
           ),
             ],
@@ -46,7 +46,7 @@ class CustomDrawer extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 30.0),
             child: CustomListTile(
               icon: Icons.logout, 
-              text: 'Выход', 
+              text: 'Log Out', 
               onTap: onSignOutTap
             ),
           ),

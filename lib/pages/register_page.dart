@@ -95,13 +95,13 @@ class _RegisterPagePageState extends State<RegisterPage> {
           
                 const SizedBox(height: 50),        
           
-                Text('Присоединяйтесь к нам 1 щёлчком!'),
+                Text('Join us with a simple tap!', style: TextStyle(fontSize: 18)),
           
                 const SizedBox(height: 25),
           
                 CustomTextField(
                   controller: emailController, 
-                  hintText: 'Почта', 
+                  hintText: 'Enter an e-mail', 
                   obscureText: false, 
                 ),
 
@@ -109,7 +109,7 @@ class _RegisterPagePageState extends State<RegisterPage> {
 
                 CustomTextField(
                   controller: passwordController, 
-                  hintText: 'Пароль', 
+                  hintText: 'Enter a password', 
                   obscureText: true, 
                 ),
 
@@ -117,24 +117,24 @@ class _RegisterPagePageState extends State<RegisterPage> {
 
                 CustomTextField(
                   controller: confirmPasswordController, 
-                  hintText: 'Проверка пароля', 
+                  hintText: 'Confirm the password', 
                   obscureText: true, 
                 ),
 
                 const SizedBox(height: 10),
 
-                CustomButton(onTap: signUp, text: 'Создать'),
+                CustomButton(onTap: signUp, text: 'Create'),
 
                 const SizedBox(height: 25),
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Уже создали аккаунт?'),
+                    Text('Already have an account?'),
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: widget.onTap,
-                      child: Text('Нажмите для входа!', 
+                      child: Text('Tap to sign in!', 
                       style: TextStyle(
                         decoration: TextDecoration.underline,
                         color: Colors.blue, 
