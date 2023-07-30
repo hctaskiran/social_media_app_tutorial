@@ -30,14 +30,47 @@ class _LoginPageState extends State<LoginPage> {
       email: emailController.text, 
       password: passwordController.text
       );
+      Navigator.pop(context);
 
       // pop loading
-      if (context.mounted) Navigator.pop(context);
+    //   if (context.mounted) Navigator.pop(context);
+    // } on FirebaseAuthException catch (e) {
+    //   Navigator.pop(context);
+    //   displayMessage('Почта не найдена');
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      displayMessage(e.code);
+
+      if (e.code == 'user-not-found') {
+        wrongEmailMessage();
+      } else if (e.code == 'wrong-password') {
+        wrongPasswordMessage();
+      }
     }
   }
+
+  void wrongEmailMessage() {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Неверная Почта'),
+        );
+      }  
+    );
+  }
+
+  void wrongPasswordMessage() {
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Неверный Пароль'),
+        );
+      }  
+    );
+  }
+  
+  
 
   // dialog message display
 
@@ -100,8 +133,10 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: widget.onTap,
                       child: Text('Зарегистрируйтесь!', 
                       style: TextStyle(
+                        decoration: TextDecoration.underline,
                         color: customColors().blueColor,
-                        fontWeight: FontWeight.bold),),
+                        fontWeight: FontWeight.bold),
+                        ),
                     )
                   ],
                 ),

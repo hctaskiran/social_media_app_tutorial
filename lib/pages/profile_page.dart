@@ -35,7 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         decoration: InputDecoration(
             hintText: 'Введите новый $field',
-            hintStyle: TextStyle(color: Colors.blue)
+            hintStyle: TextStyle(color: customColors().whiteColor)
         ),
         onChanged:(value) {
           newValue = value;

@@ -15,6 +15,14 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPagePageState extends State<RegisterPage> {
 
+  bool _isVisible = true;
+
+  void _toggleVisibility(params) {
+    setState(() {
+      _isVisible = !_isVisible;
+    });
+  }
+
   void signUp() async {
     // loading circle
     showDialog(
@@ -55,6 +63,7 @@ class _RegisterPagePageState extends State<RegisterPage> {
         // pop loading
         Navigator.pop(context);
         // show error to user
+
         displayMessage(e.code);
       }
 
@@ -73,13 +82,14 @@ class _RegisterPagePageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                SizedBox(height: 150),
           
                 Icon(Icons.lock, size: 100),
           

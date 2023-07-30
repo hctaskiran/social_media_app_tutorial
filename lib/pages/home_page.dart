@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:social_media_app_tutorial/components/drawer.dart';
 import 'package:social_media_app_tutorial/components/textfield.dart';
 import 'package:social_media_app_tutorial/components/wall_post.dart';
+import 'package:social_media_app_tutorial/helper/helper.dart';
 import 'package:social_media_app_tutorial/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,8 +28,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void postMessage() {
+    FocusManager.instance.primaryFocus?.unfocus();
     // only post if textfield is filled
     if (textController.text.isNotEmpty) {
+      
       FirebaseFirestore.instance.collection('User Posts').add({
         'UserEmail': currentUser.email,
         'Message': textController.text,
@@ -54,6 +58,7 @@ class _HomePageState extends State<HomePage> {
     )
    );
   }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                 stream: 
                   FirebaseFirestore.instance
                   .collection('User Posts')
-                  .orderBy('TimeStamp',descending: false)
+                  .orderBy('TimeStamp',descending: true)
                   .snapshots(),
                 builder:(context, snapshot) {
                   if (snapshot.hasData) {
@@ -87,6 +92,7 @@ class _HomePageState extends State<HomePage> {
                       return WallPost(
                         message: post['Message'], 
                         user: post['UserEmail'],
+                        time: formatDate(post['TimeStamp']),
                         likes: List<String>.from(post['Likes'] ?? []), 
                         postID: post.id,
 
@@ -117,7 +123,8 @@ class _HomePageState extends State<HomePage> {
                   ),
 
                   // post button
-                  IconButton(onPressed: postMessage, icon: Icon(Icons.send_outlined)),
+                  IconButton(
+                    onPressed: postMessage, icon: Icon(Icons.send_outlined)),
                 ],
               ),
             ),
@@ -150,6 +157,7 @@ class customColors {
   final grey500color = Colors.grey.shade500;
   final grey900color = Colors.grey.shade900;
   final grey300color = Colors.grey.shade300;
+  final whiteColor = Colors.white;
 }
 
 class customSizedBoxes {
