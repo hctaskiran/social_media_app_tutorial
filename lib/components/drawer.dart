@@ -11,7 +11,7 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: customColors().grey900color,
+      backgroundColor: Theme.of(context).colorScheme.background,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -21,13 +21,14 @@ class CustomDrawer extends StatelessWidget {
         DrawerHeader(
           child: Icon(
             Icons.person, 
-            color: customColors().whiteColor,
+            
             size: 64,
           ),
          ),
          // home listtile
          
          CustomListTile(
+          
           icon: Icons.home, 
           text: 'HOME',
           onTap: () => Navigator.pop(context),

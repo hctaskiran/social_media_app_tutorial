@@ -15,5 +15,5 @@ ThemeData lightTheme = ThemeData(
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(foregroundColor: Colors.black)
-  )
+  ),
 );

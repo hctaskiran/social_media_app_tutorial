@@ -90,14 +90,12 @@ class _WallPostState extends State<WallPost> {
       showDialog(
         context: context, 
         builder:(context) => AlertDialog(
-          backgroundColor: customColors().grey900color,
-          title: Text('Add Comment', style: TextStyle(color: customColors().whiteColor),),
+          title: Text('Add Comment'),
           content: TextField(
             autofocus: true,
             controller: _commentTextController,
-            style: TextStyle(color: customColors().whiteColor),
             decoration: InputDecoration(
-              hintStyle: TextStyle(color: customColors().whiteColor),
+              
               hintText: 'Write your comment...'
               
               
@@ -110,7 +108,7 @@ class _WallPostState extends State<WallPost> {
                 Navigator.pop(context);
                 _commentTextController.clear();
                 }, 
-              child: Text('Cancel', style: TextStyle(color: customColors().whiteColor)), ),
+              child: Text('Cancel'), ),
 
             // post save
             TextButton(
@@ -122,7 +120,7 @@ class _WallPostState extends State<WallPost> {
                 _commentTextController.clear();
               }, 
               child: Text('Post',
-              style: TextStyle(color: customColors().whiteColor)
+              
               ),
               
               ),

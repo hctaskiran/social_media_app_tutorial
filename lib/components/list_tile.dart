@@ -14,12 +14,10 @@ class CustomListTile extends StatelessWidget {
       child: ListTile(
         leading: Icon(
           icon, 
-          color: customColors().whiteColor
           ),
           onTap: onTap,
         title: Text(text, 
           style: TextStyle(
-            color: customColors().whiteColor,
             fontSize: 18
             ),
           ),

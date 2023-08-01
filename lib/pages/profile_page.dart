@@ -22,20 +22,16 @@ class _ProfilePageState extends State<ProfilePage> {
     await showDialog(
       context: context, 
       builder: (context) => AlertDialog(
-        backgroundColor: customColors().grey900color,
         title: Text('Edit $field',
         style: TextStyle(
-          color: customColors().whiteColor
         ),
        ),
        content: TextField(
         autofocus: true,
         style: TextStyle(
-          color: customColors().whiteColor,
         ),
         decoration: InputDecoration(
             hintText: 'Enter a new $field',
-            hintStyle: TextStyle(color: customColors().whiteColor)
         ),
         onChanged:(value) {
           newValue = value;
@@ -44,12 +40,12 @@ class _ProfilePageState extends State<ProfilePage> {
        actions: [
         // cansel
         TextButton(
-          child: Text('Cancel', style: TextStyle(color: customColors().whiteColor)),
+          child: Text('Cancel'),
           onPressed:() => Navigator.pop(context),
           ),
         // save
         TextButton(
-          child: Text('Save', style: TextStyle(color: customColors().whiteColor)),
+          child: Text('Save'),
           onPressed:() => Navigator.of(context).pop(newValue),
           ),
        ],
@@ -98,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.only(left: 25),
             child: Text(
               'User Details',
-              style: TextStyle(color: customColors().grey700color),
+              
               ),
           ),
 
@@ -125,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
             padding: const EdgeInsets.only(left: 25),
             child: Text(
               'Posts of the User',
-              style: TextStyle(color: customColors().grey700color),
+              
               ),
           ),
         ],
