@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app_tutorial/components/comment.dart';
 import 'package:social_media_app_tutorial/components/comment_button.dart';
+import 'package:social_media_app_tutorial/components/delete_button.dart';
 import 'package:social_media_app_tutorial/components/likebutton.dart';
 import 'package:social_media_app_tutorial/helper/helper.dart';
 import 'package:social_media_app_tutorial/pages/home_page.dart';
@@ -132,6 +133,58 @@ class _WallPostState extends State<WallPost> {
       );
     }
 
+    // delete post
+    void deletePost() {
+      // confirmation
+      showDialog(
+        context: context, 
+        builder:(context) => AlertDialog(
+          title: const Text('Delete Post'),
+          content: const Text('Are you sure to delete this post?'),
+          actions: [
+            // cancel
+            TextButton(
+              onPressed: () => Navigator.pop(context), 
+              child: const Text('Cancel')),
+            // save
+            TextButton(
+              onPressed: () async{
+                // delete comments first, then post
+                // if you delete post only, comments will be remain on firestore
+                final commentDocs = await FirebaseFirestore.instance
+                .collection('User Posts')
+                .doc(widget.postID)
+                .collection('Comments')
+                .get();
+
+                for (var doc in commentDocs.docs) {
+                  await FirebaseFirestore.instance
+                  .collection('User Posts')
+                  .doc(widget.postID)
+                  .collection('Comments')
+                  .doc(doc.id)
+                  .delete();
+                }
+
+                // deleteing post
+                FirebaseFirestore.instance
+                .collection('User Posts')
+                .doc(widget.postID)
+                .delete()
+                .then((value) => print('Post Deleted'))
+                .catchError((error) => print('Failed to delete post')
+                );
+
+                Navigator.pop(context);
+
+              }, 
+              child: const Text('Delete')),
+
+          ],
+        )
+      );
+    }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -144,21 +197,31 @@ class _WallPostState extends State<WallPost> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // msg + user
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(widget.message),
-              const SizedBox(height: 5),
-              Row(
-                children: [
-                  Text(widget.user, style: TextStyle(color: customColors().grey500color)),
-                  Text(' | ', style: TextStyle(color: customColors().grey500color)),
-                  Text(widget.time, style: TextStyle(color: customColors().grey500color))
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            //msg + email
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.message),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    Text(widget.user, style: TextStyle(color: customColors().grey500color)),
+                    Text(' | ', style: TextStyle(color: customColors().grey500color)),
+                    Text(widget.time, style: TextStyle(color: customColors().grey500color))
+             ],
+            ),
            ],
           ),
-         ],
-        ),
+          // delete button  
+          if (widget.user == currentUser!.email)
+          DeleteButton(onTap: deletePost),
+        ],               
+      ),
           SizedBox(height: 20,),
 
           // like
