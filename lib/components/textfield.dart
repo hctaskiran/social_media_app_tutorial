@@ -13,7 +13,7 @@ class CustomTextField extends StatefulWidget {
     required this.hintText, 
     required this.obscureText,
      this.labelText,
-     this.prefixIcon});
+     this.prefixIcon,});
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -24,6 +24,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      
       controller: widget.controller,
       obscureText: widget.obscureText,
       decoration: InputDecoration(
@@ -33,7 +34,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.purple)
         ),
-        fillColor: Colors.grey[200],
+        fillColor: Theme.of(context).colorScheme.primary,
         filled: true,
         hintText: widget.hintText,
         labelText: widget.labelText,

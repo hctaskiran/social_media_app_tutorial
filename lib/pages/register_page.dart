@@ -47,6 +47,7 @@ class _RegisterPagePageState extends State<RegisterPage> {
           email: emailController.text, 
           password: passwordController.text
         );
+        
         // after user has been created, create a new doc in cloud called Users
         FirebaseFirestore.instance
         .collection('Users')
@@ -57,18 +58,31 @@ class _RegisterPagePageState extends State<RegisterPage> {
           // add more if needed
         });
 
+    
 
         // pop loading
         if (context.mounted) Navigator.pop(context);
       } on FirebaseAuthException catch (e) {
         // pop loading
         Navigator.pop(context);
-        // show error to user
-
-        displayMessage(e.code);
+        if (e.code == 'email-already-in-use') {
+          emailInUseMessage();
+        }
       }
 
   }
+
+    void emailInUseMessage() {
+      showDialog(
+        context: context, 
+        builder:(context) {
+          return const AlertDialog(
+            title: Text('Email is already in use!'),
+          );
+        }
+      );
+    }
+
     void displayMessage(String message) {
       showDialog(context: context, builder:(context) => AlertDialog(
         title: Text(message),

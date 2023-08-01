@@ -106,7 +106,8 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: 'Enter the e-mail', 
                   labelText: 'E-Mail',
                   prefixIcon: Icon(Icons.email, color: customColors().grey700color),
-                  obscureText: false, 
+                  obscureText: false,
+                   
                 ),
 
                 const SizedBox(height: 10),

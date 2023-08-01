@@ -62,82 +62,86 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: customColors().grey300color,
-      appBar: AppBar(
-        title: Text('Ducky'), 
-        backgroundColor: customColors().grey900color,        
-      ),
-      drawer: CustomDrawer(
-        onProfileTap: goProfilePage, 
-        onSignOutTap: signOut,
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Expanded(
-              child: 
-              StreamBuilder(
-                stream: 
-                  FirebaseFirestore.instance
-                  .collection('User Posts')
-                  .orderBy('TimeStamp',descending: true)
-                  .snapshots(),
-                builder:(context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data!.docs.length,
-                      itemBuilder:(context, index) {
-                      final post = snapshot.data!.docs[index];   
-                      return WallPost(
-                        message: post['Message'], 
-                        user: post['UserEmail'],
-                        time: formatDate(post['TimeStamp']),
-                        likes: List<String>.from(post['Likes'] ?? []), 
-                        postID: post.id,
-
-                      );
+    return GestureDetector(
+      onTap:() {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        appBar: AppBar(
+          title: Text('Ducky'),         
+        ),
+        drawer: CustomDrawer(
+          onProfileTap: goProfilePage, 
+          onSignOutTap: signOut,
+        ),
+        body: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: 
+                StreamBuilder(
+                  stream: 
+                    FirebaseFirestore.instance
+                    .collection('User Posts')
+                    .orderBy('TimeStamp',descending: true)
+                    .snapshots(),
+                  builder:(context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder:(context, index) {
+                        final post = snapshot.data!.docs[index];   
+                        return WallPost(
+                          message: post['Message'], 
+                          user: post['UserEmail'],
+                          time: formatDate(post['TimeStamp']),
+                          likes: List<String>.from(post['Likes'] ?? []), 
+                          postID: post.id,
+    
+                        );
+                      }
+                     );
+                    } else if (snapshot.hasError){
+                      return Center(child: Text('Error: ${snapshot.error}'));
                     }
-                   );
-                  } else if (snapshot.hasError){
-                    return Center(child: Text('Error: ${snapshot.error}'));
+                    return Center(child: CircularProgressIndicator());
                   }
-                  return Center(child: CircularProgressIndicator());
-                }
-               ),
-              ),
-
-            // post 
-            Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: 
-                      CustomTextField(
-                        controller: 
-                        textController, 
-                        hintText: customTexts().publishMsg, 
-                        obscureText: false
+                 ),
+                ),
+    
+              // post 
+              Padding(
+                padding: const EdgeInsets.all(25.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: 
+                        CustomTextField(
+                          controller: 
+                          textController, 
+                          hintText: customTexts().publishMsg, 
+                          obscureText: false
+                      ),
                     ),
-                  ),
-
-                  // post button
-                  IconButton(
-                    onPressed: postMessage, icon: Icon(Icons.send_outlined)),
-                ],
+    
+                    // post button
+                    IconButton(
+                      onPressed: postMessage, icon: Icon(Icons.send_outlined)),
+                  ],
+                ),
               ),
-            ),
-            
-
-
-
-            // logged in as
-            Text(
-            customTexts().loggedMsg + currentUser.email!, 
-            style: TextStyle(color:customColors().grey500color)),
-            customSizedBoxes().elliHeBox
-          ],
+              
+    
+    
+    
+              // logged in as
+              Text(
+              customTexts().loggedMsg + currentUser.email!, 
+              style: TextStyle(color:customColors().grey500color)),
+              customSizedBoxes().elliHeBox
+            ],
+          ),
         ),
       ),
     );
@@ -145,8 +149,8 @@ class _HomePageState extends State<HomePage> {
 }
 
 class customTexts {
-  final String loggedMsg = 'Вошли как: ';
-  final String publishMsg = 'Публикация';
+  final String loggedMsg = 'Logged in as: ';
+  final String publishMsg = 'Share your thoughts...';
 }
 
 class customIcons {

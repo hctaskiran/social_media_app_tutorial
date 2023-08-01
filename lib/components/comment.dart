@@ -10,7 +10,7 @@ class Comment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: customColors().grey300color,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(6)
       ),
       margin: EdgeInsets.only(bottom: 5),

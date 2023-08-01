@@ -6,6 +6,8 @@ import 'package:social_media_app_tutorial/auth/auth.dart';
 import 'package:social_media_app_tutorial/auth/login_or_register.dart';
 import 'package:social_media_app_tutorial/pages/login_page.dart';
 import 'package:social_media_app_tutorial/pages/register_page.dart';
+import 'package:social_media_app_tutorial/themes/theme_dark.dart';
+import 'package:social_media_app_tutorial/themes/theme_light.dart';
 import 'firebase_options.dart';
 
 Future<void> main()  async {
@@ -23,8 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // supportedLocales: L10n.all,
-      theme: ThemeData(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: AuthPage()
     );
   }
